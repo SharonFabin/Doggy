@@ -1,0 +1,164 @@
+import React, {Component} from 'react';
+import {View, Text, ActivityIndicator, StyleSheet, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
+import Button from '../components/Button';
+import NiceInput from '../components/NiceInput';
+//import Input from '../components/Input';
+import Title from '../components/Title';
+import NiceButton from "../components/NiceButton";
+import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+import {loginUser, checkAuth} from '../actions';
+import firebase from "firebase";
+import {firebaseConfig} from '../settings';
+import {WaveIndicator, MaterialIndicator,} from 'react-native-indicators';
+import {fonts, colors, sizes} from '../constants/theme';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+class Login extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: '',
+            password: ''
+        };
+    }
+
+    onChangeUser = text => {
+        this.setState({
+            user: text
+        });
+    };
+
+    onChangePassword = text => {
+        this.setState({
+            password: text
+        });
+    };
+
+    onPressLogin = () => {
+        this.props.loginUser(this.state.user, this.state.password);
+    };
+
+    onPressSignUp = () => {
+        Actions.signup();
+    };
+
+    renderButtons() {
+        if (this.props.auth.loading) {
+            return <MaterialIndicator color="#ffffff"/>;
+        } else {
+            return (
+                <View style={styles.mid}>
+                    <Button textButton="Login" onPress={this.onPressLogin.bind(this)} textStyle={styles.buttonText}
+                            style={styles.buttonStyle}/>
+                    <TouchableOpacity onPress={this.onPressSignUp.bind(this)}>
+                        <View>
+                            <Text style={styles.text}>Signup</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.onPressSignUp.bind(this)}>
+                        <View>
+                            <Text style={styles.text}>Forgot your password?</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
+    }
+
+    render() {
+        let pic = require('../assets/blur-bg.jpg');
+        return (
+            <ImageBackground
+                source={pic}
+                style={{width: '100%', height: '100%'}}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Doggy Meet</Text>
+                    <NiceInput
+                        customStyle={styles.input}
+                        placeholder="Email"
+                        onChangeText={this.onChangeUser.bind(this)}
+                        value={this.state.user}
+                        onSubmitEditing={() => {
+                            this.secondTextInput.focus();
+                        }}
+                        blurOnSubmit={false}
+                        editiable={false}
+                    />
+
+                    <NiceInput
+                        customStyle={styles.input}
+                        refer={(input) => {
+                            this.secondTextInput = input;
+                        }}
+                        placeholder="Password"
+                        secureTextEntry
+                        onChangeText={this.onChangePassword.bind(this)}
+                        value={this.state.password}
+                    />
+                    <Text>{this.props.auth.errorLoging}</Text>
+                    {this.renderButtons()}
+                </View>
+            </ImageBackground>
+        );
+    }
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps,
+    {loginUser}
+)(Login);
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    mid: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    input: {
+        width: 300,
+        height: 50,
+        fontSize: 20,
+        color: 'white'
+    },
+    buttonText: {
+        fontSize: 20,
+        color: 'white'
+    },
+    title: {
+        fontSize: fonts.h1.fontSize,
+        fontWeight: 'bold',
+        color: colors.white,
+        marginBottom: 20,
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
+    },
+    buttonStyle: {
+        backgroundColor: colors.accent,
+        borderRadius: sizes.radius
+    },
+    headerWrapper: {
+        borderBottomColor: colors.white,
+        borderBottomWidth: 2,
+        marginBottom: 30,
+    },
+
+
+    text: {
+        color: 'white',
+        fontSize: sizes.base,
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
+    }
+});
