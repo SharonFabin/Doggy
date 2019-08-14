@@ -1,6 +1,7 @@
 import * as React from "react";
-import {StyleSheet, TextInput} from "react-native";
-
+import {StyleSheet, TextInput, View} from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {colors} from "../constants/theme";
 
 const blue = '#1a73e8';
 
@@ -32,28 +33,40 @@ class NiceInput extends React.Component {
             inlineStyle = inlineStyle.concat(this.props.customStyle)
         }
         return (
-            <TextInput
-                selectionColor={blue}
-                underlineColorAndroid={
-                    isFocused ? blue : 'white'
-                }
-                onFocus={this.handleFocus}
-                onBlur={this.handleBlur}
-                style={inlineStyle}
-                ref={this.props.refer}
-                {...otherProps}
-            />
+            <View style={styles.inputContainer} borderBottomColor={isFocused ? blue : 'white'}>
+                <Icon style={styles.icon} name={this.props.icon} size={20} color={isFocused ? blue : colors.black}/>
+                <TextInput
+                    selectionColor={blue}
+                    underlineColorAndroid={'transparent'}
+                    onFocus={this.handleFocus}
+                    onBlur={this.handleBlur}
+                    style={inlineStyle}
+                    ref={this.props.refer}
+                    inlineImageLeft='username'
+                    {...otherProps}
+                />
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    inputContainer: {
+
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        height: 40,
+        marginBottom: 10
+    },
+    icon: {
+        paddingLeft: 10,
+        paddingRight: 10
+    },
     defaultStyle: {
-        width: 300,
-        height: 50,
         fontSize: 20,
-        paddingLeft: 6,
-        color: 'white'
+        color: 'white',
     }
 });
 

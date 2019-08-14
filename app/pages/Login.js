@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, ActivityIndicator, StyleSheet, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
-import Button from '../components/Button';
+import {View, ActivityIndicator, StyleSheet, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
+import {Input, Text, Button} from 'react-native-elements';
 import NiceInput from '../components/NiceInput';
 //import Input from '../components/Input';
 import Title from '../components/Title';
@@ -13,6 +13,7 @@ import {firebaseConfig} from '../settings';
 import {WaveIndicator, MaterialIndicator,} from 'react-native-indicators';
 import {fonts, colors, sizes} from '../constants/theme';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 class Login extends Component {
 
@@ -50,8 +51,12 @@ class Login extends Component {
         } else {
             return (
                 <View style={styles.mid}>
-                    <Button textButton="Login" onPress={this.onPressLogin.bind(this)} textStyle={styles.buttonText}
-                            style={styles.buttonStyle}/>
+                    {/*<Button textButton="Login" onPress={this.onPressLogin.bind(this)}/>*/}
+                    <Button
+                        title="Login"
+                        onPress={this.onPressLogin.bind(this)}
+                        buttonStyle={styles.buttonStyle}
+                    />
                     <TouchableOpacity onPress={this.onPressSignUp.bind(this)}>
                         <View>
                             <Text style={styles.text}>Signup</Text>
@@ -74,28 +79,33 @@ class Login extends Component {
                 source={pic}
                 style={{width: '100%', height: '100%'}}>
                 <View style={styles.container}>
-                    <Text style={styles.title}>Doggy Meet</Text>
-                    <NiceInput
-                        customStyle={styles.input}
-                        placeholder="Email"
+                    <Text h3 style={styles.title}>Doggy Meet</Text>
+                    <Input
+                        placeholder='Email'
+                        leftIcon={<Icon name='user' size={24} color={colors.black}/>}
+                        leftIconContainerStyle={styles.iconContainerStyle}
+                        containerStyle={styles.inputContainer}
+                        inputContainerStyle={styles.inputInputContainer}
+                        inputStyle={styles.inputInput}
                         onChangeText={this.onChangeUser.bind(this)}
-                        value={this.state.user}
                         onSubmitEditing={() => {
                             this.secondTextInput.focus();
                         }}
-                        blurOnSubmit={false}
-                        editiable={false}
+                        value={this.state.user}
                     />
-
-                    <NiceInput
-                        customStyle={styles.input}
-                        refer={(input) => {
+                    <Input
+                        placeholder='Password'
+                        leftIcon={<Icon name='eye' size={24} color={colors.black}/>}
+                        leftIconContainerStyle={styles.iconContainerStyle}
+                        containerStyle={styles.inputContainer}
+                        inputContainerStyle={styles.inputInputContainer}
+                        inputStyle={styles.inputInput}
+                        ref={(input) => {
                             this.secondTextInput = input;
                         }}
-                        placeholder="Password"
-                        secureTextEntry
                         onChangeText={this.onChangePassword.bind(this)}
                         value={this.state.password}
+                        secureTextEntry
                     />
                     <Text>{this.props.auth.errorLoging}</Text>
                     {this.renderButtons()}
@@ -124,18 +134,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    input: {
+    inputContainer: {
         width: 300,
         height: 50,
-        fontSize: 20,
+    },
+    inputInputContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: 'white'
+    },
+    inputInput: {
         color: 'white'
+    },
+    iconContainerStyle: {
+        paddingRight: 10,
+        width: 40
     },
     buttonText: {
         fontSize: 20,
         color: 'white'
     },
     title: {
-        fontSize: fonts.h1.fontSize,
         fontWeight: 'bold',
         color: colors.white,
         marginBottom: 20,
@@ -145,7 +165,8 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         backgroundColor: colors.accent,
-        borderRadius: sizes.radius
+        borderRadius: sizes.radius,
+        width: 200
     },
     headerWrapper: {
         borderBottomColor: colors.white,
