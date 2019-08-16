@@ -45,28 +45,42 @@ class Login extends Component {
         Actions.signup();
     };
 
+    onPressMap = () => {
+        Actions.map();
+    };
+
     renderButtons() {
         if (this.props.auth.loading) {
-            return <MaterialIndicator color="#ffffff"/>;
+            return (
+                <View style={{height: 40}}>
+                    <MaterialIndicator color="white"/>
+                </View>
+            );
         } else {
             return (
                 <View style={styles.mid}>
-                    {/*<Button textButton="Login" onPress={this.onPressLogin.bind(this)}/>*/}
                     <Button
                         title="Login"
                         onPress={this.onPressLogin.bind(this)}
                         buttonStyle={styles.buttonStyle}
                     />
-                    <TouchableOpacity onPress={this.onPressSignUp.bind(this)}>
-                        <View>
-                            <Text style={styles.text}>Signup</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.onPressSignUp.bind(this)}>
-                        <View>
-                            <Text style={styles.text}>Forgot your password?</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <Button
+                        title="Map"
+                        onPress={this.onPressMap.bind(this)}
+                        buttonStyle={styles.buttonStyle}
+                    />
+                    <Button
+                        title="Forgot your password?"
+                        onPress={this.onPressSignUp.bind(this)}
+                        titleStyle={styles.text}
+                        type="clear"
+                    />
+                    <Button
+                        title="Signup"
+                        onPress={this.onPressSignUp.bind(this)}
+                        titleStyle={styles.text}
+                        type="clear"
+                    />
                 </View>
             );
         }
@@ -149,7 +163,7 @@ const styles = StyleSheet.create({
     },
     iconContainerStyle: {
         paddingRight: 10,
-        width: 40
+        width: 40,
     },
     buttonText: {
         fontSize: 20,

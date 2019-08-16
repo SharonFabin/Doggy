@@ -5,21 +5,31 @@ import {fetchPosts, logoutUser} from '../actions';
 import Post from '../components/post/Post';
 
 class Home extends Component {
-    state = {
-        posts: []
-    };
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: []
+        };
         this.props.fetchPosts();
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props !== nextProps) {
-            this.setState({
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(nextProps !== prevState){
+            return {
                 posts: nextProps.posts.posts
-            });
+            };
         }
+        return null
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //     if (this.props !== nextProps) {
+    //         this.setState({
+    //             posts: nextProps.posts.posts
+    //         });
+    //     }
+    // }
 
     onPressLogout = () => {
         this.props.logoutUser();

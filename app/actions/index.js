@@ -23,3 +23,8 @@ export {
     onSaveChanges,
     fetchProfile
 } from './ProfileActions';
+
+export {
+    updateLocation,
+    watchLocation
+} from './LocationActions';

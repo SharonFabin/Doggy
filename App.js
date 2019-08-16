@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import {firebaseConfig} from './app/settings'
 import Main from './app/Main';
 
-firebase.initializeApp(firebaseConfig);
+
 
 export default class App extends Component {
     componentDidMount() {
