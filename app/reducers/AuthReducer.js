@@ -14,7 +14,7 @@ const INITIAL_STATE = {
     loading: false,
     user: null,
 };
-
+//esti shmena
 const auth = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case AUTH_CREATE_USER:
