@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, StyleSheet, Button} from 'react-native';
+import {Text, View, ScrollView, StyleSheet} from 'react-native';
+import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {fetchPosts, logoutUser} from '../actions';
 import Post from '../components/post/Post';
@@ -9,7 +10,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: []
+            posts: [],
         };
         this.props.fetchPosts();
     }

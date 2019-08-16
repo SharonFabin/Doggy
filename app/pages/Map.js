@@ -8,8 +8,8 @@ import {updateLocation, watchLocation} from "../actions";
 
 const LATITUDE_DELTA = 0.009;
 const LONGITUDE_DELTA = 0.009;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE = 31.738318;
+const LONGITUDE = 34.98372;
 
 class Map extends Component {
 
@@ -149,7 +149,7 @@ class Map extends Component {
 
     renderMarks() {
         return this.props.location.locations.map(location =>
-            <MapView.Marker coordinate={location} key={location.uid}/>
+            <Marker coordinate={location} key={location.uid} title={location.uid}/>
         );
     }
 
@@ -162,24 +162,19 @@ class Map extends Component {
                 <Button title="get location" onPress={this.getLocation.bind(this)}/>
                 <MapView style={styles.map} customMapStyle={mapStyle}
                          initialRegion={{
-                             latitude: 37.78825,
-                             longitude: -122.4324,
+                             latitude: LATITUDE,
+                             longitude: LONGITUDE,
                              latitudeDelta: 0.0922,
                              longitudeDelta: 0.0421,
                          }}
                          region={{
-                             latitude: 37.78825,
-                             longitude: -122.4324,
+                             latitude: LATITUDE,
+                             longitude: LONGITUDE,
                              latitudeDelta: 0.0922,
                              longitudeDelta: 0.0421,
                          }}
                          >
-                    {this.props.location.locations.map(location =>
-                        <Marker
-                            coordinate={location}
-                            title={location.uid}
-                        />
-                    )}
+                    {this.renderMarks()}
                 </MapView>
             </View>
         );

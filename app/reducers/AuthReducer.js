@@ -12,7 +12,7 @@ const INITIAL_STATE = {
     errorLoging: '',
     errorCreating: '',
     loading: false,
-    user: null
+    user: null,
 };
 
 const auth = (state = INITIAL_STATE, action) => {

@@ -3,6 +3,7 @@ import {View, Text, ActivityIndicator, StyleSheet, ImageBackground, TextInput} f
 import {connect} from 'react-redux';
 import {loginUser, checkAuth} from '../actions';
 import {WaveIndicator, MaterialIndicator,} from 'react-native-indicators';
+import {Button} from "react-native-elements";
 
 class Welcome extends Component {
 
@@ -29,7 +30,7 @@ class Welcome extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
 });
 
 export default connect(
